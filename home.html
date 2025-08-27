@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farewell, Sir Rohit</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Thank You, Rohit Sir</h1>
+    <p class="subtitle">A heartfelt farewell from your students – 2024 to 2025</p>
+  </header>
+
+  <section class="hero">
+    <img src="images/logo.jpg" alt="Sir Rohit" class="teacher-photo">
+    <p class="intro">
+      Sir Rohit, in just a short time you’ve made a lifelong impact. Your passion, patience, and dedication made every
+      class unforgettable. Thank you for being more than a teacher – thank you for being an inspiration.
+    </p>
+  </section>
+
+  <section class="memories">
+    <h2>📚 Memories Timeline</h2>
+    <ul class="timeline">
+      <li><span>2024:</span> First class – you made science exciting from day one!</li>
+      <li><span>2025:</span> The epic class debate that turned into a laughter session</li>
+      <li><span>2025:</span> Farewell speech – we’ll never forget your words. <br> <span><button onclick="goToNext()">Album</button></span> 
+      </li>
+      
+    </ul>
+  </section>
+
+  <section class="messages">
+    <h2>💬 Messages from Students</h2>
+    <div class="message-card">
+      <p>“Thank you so much... Sir, for always being a teacher like a friend, who handles all the tantrums of his
+        students without any hesitation.
+        We are really going to miss you, Sir...!” – Kanchan</p>
+    </div>
+    <div class="message-card">
+      <p>“Your energy in class was unmatched. We’ll miss your jokes!” – Simran</p>
+    </div>
+    <div class="message-card">
+      <p>“Best teacher ever. Thank you for everything, Sir!” – Karan</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>With gratitude and love, Class of 2025 💐</p>
+  </footer>
+</body>
+<script>
+    function goToNext() {
+      // Delay navigation by 2 seconds
+      const button = document.querySelector("button");
+      button.disabled = true;
+      button.textContent = "Openingg...";
+      setTimeout(() => {
+        window.location.href = "imageGallery.html"; // Change to your actual page
+      }, 2000);
+    }
+  </script>
+</html>
