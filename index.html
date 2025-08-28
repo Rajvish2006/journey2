@@ -6,7 +6,9 @@
   <title>Entrance Page</title>
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -17,8 +19,10 @@
 
     body, html {
       height: 100%;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f0f4ff, #c2d1ff);
+      font-family: "Pacifico", cursive;
+      font-weight: 400;
+      font-style: normal;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
     }
 
     .main {
@@ -47,24 +51,20 @@
       animation-delay: 2.5s; /* Delay showing button */
     }
 
-    .button1 button {
-      font-size: 30px;
-      padding: 20px 50px;
-      border-radius: 50px;
+    button {
+      background: linear-gradient(135deg, #d16ba5, #5d26c1);
+      color: white;
       border: none;
-      background-color: #ffffff;
-      color: #333;
-      cursor: pointer;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-      transition: all 0.3s ease;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: 0.3s ease-in-out;
     }
-
-    .button1 button:hover {
-      background-color: #0056d2;
-      color: #fff;
-      transform: scale(1.05);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    }
+    button:hover {
+      box-shadow: 0 0 25px rgba(209,107,165,0.7), 0 0 35px rgba(93,38,193,0.6);
+      transform: scale(1.07);
+  }
 
     /* Animations */
     @keyframes fadeIn {
@@ -99,10 +99,10 @@
 <body>
   <div class="main" id="main">
     <div class="head">
-      Tap To See View
+      a doorway to all the memories we made..!
     </div>
     <div class="button1">
-      <button onclick="goToNext()">Click to See</button>
+      <button onclick="goToNext()">Unlock Memories</button>
     </div>
   </div>
 
