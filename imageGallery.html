@@ -131,8 +131,6 @@
     <div class="media-card">Click to see<video src="v3.mp4"></video></div>
     <div class="media-card">Click to see<video src="v4.mp4"></video></div>
     <div class="media-card">Click to see<video src="v5.mp4"></video></div>
-    <div class="media-card">Click to see<video src="v6.mp4"></video></div>
-    <div class="media-card">Click to see<video src="v7.mp4"></video></div>
   </div>
 
   <!-- Modal -->
@@ -141,63 +139,71 @@
     <div id="modal-body"></div>
   </div>
 
-  <script>
-    // Shuffle helper function
-    function shuffleGallery(gallerySelector) {
-      const gallery = document.querySelector(gallerySelector);
-      const cards = Array.from(gallery.children);
+<script>
+  // Shuffle helper function
+  function shuffleGallery(gallery) {
+    if (!gallery) return;
+    const cards = Array.from(gallery.children);
 
-      // Fisher–Yates shuffle
-      for (let i = cards.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [cards[i], cards[j]] = [cards[j], cards[i]];
-      }
-
-      // Append shuffled elements
-      cards.forEach(card => gallery.appendChild(card));
+    // Fisher–Yates shuffle
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
     }
 
-    // Shuffle both galleries on load
-    window.addEventListener("load", () => {
-      shuffleGallery(".gallery");
-      shuffleGallery(".video-gallery");
-    });
+    // Append shuffled elements
+    cards.forEach(card => gallery.appendChild(card));
+  }
 
-    // Modal functionality
-    const modal = document.getElementById("modal");
-    const modalBody = document.getElementById("modal-body");
-    const closeBtn = document.getElementById("closeBtn");
+  // Shuffle all galleries on load
+  window.addEventListener("load", () => {
+    document.querySelectorAll(".gallery, .video-gallery")
+      .forEach(gallery => shuffleGallery(gallery));
+  });
 
-    document.addEventListener("click", (e) => {
-      const card = e.target.closest(".media-card");
-      if (!card) return;
+  // Modal functionality
+  const modal = document.getElementById("modal");
+  const modalBody = document.getElementById("modal-body");
+  const closeBtn = document.getElementById("closeBtn");
 
-      modal.style.display = "flex";
-      modalBody.innerHTML = "";
+  document.addEventListener("click", (e) => {
+    const card = e.target.closest(".media-card");
+    if (!card) return;
 
-      const media = card.querySelector("img, video").cloneNode(true);
+    modal.style.display = "flex";
+    modalBody.innerHTML = "";
 
-      if (media.tagName.toLowerCase() === "video") {
-        media.setAttribute("controls", "true");
-        media.setAttribute("autoplay", "true");
-        media.setAttribute("playsinline", "true");
-      }
+    const media = card.querySelector("img, video").cloneNode(true);
 
+    if (media.tagName.toLowerCase() === "video") {
+      media.setAttribute("controls", "true");
+      media.setAttribute("autoplay", "true");
+      media.setAttribute("playsinline", "true");
       modalBody.appendChild(media);
-    });
 
-    closeBtn.onclick = () => {
+      // Explicitly start playing
+      media.play().catch(err => {
+        console.warn("Autoplay prevented:", err);
+      });
+    } else {
+      modalBody.appendChild(media);
+    }
+  });
+
+  closeBtn.onclick = () => {
+    modal.style.display = "none";
+    modalBody.innerHTML = "";
+  };
+
+  modal.onclick = (e) => {
+    if (e.target === modal) {
       modal.style.display = "none";
       modalBody.innerHTML = "";
-    };
+    }
+  };
+</script>
 
-    modal.onclick = (e) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-        modalBody.innerHTML = "";
-      }
-    };
-  </script>
+
 
 </body>
 </html>
