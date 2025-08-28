@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery</title>
+  <title>Gallery with Expand</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -142,36 +142,59 @@
   </div>
 
   <script>
+    // Shuffle helper function
+    function shuffleGallery(gallerySelector) {
+      const gallery = document.querySelector(gallerySelector);
+      const cards = Array.from(gallery.children);
+
+      // Fisher–Yates shuffle
+      for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+      }
+
+      // Append shuffled elements
+      cards.forEach(card => gallery.appendChild(card));
+    }
+
+    // Shuffle both galleries on load
+    window.addEventListener("load", () => {
+      shuffleGallery(".gallery");
+      shuffleGallery(".video-gallery");
+    });
+
+    // Modal functionality
     const modal = document.getElementById("modal");
     const modalBody = document.getElementById("modal-body");
     const closeBtn = document.getElementById("closeBtn");
 
-    document.querySelectorAll(".media-card").forEach(card => {
-      card.addEventListener("click", () => {
-        modal.style.display = "flex";
-        modalBody.innerHTML = ""; // clear old content
+    document.addEventListener("click", (e) => {
+      const card = e.target.closest(".media-card");
+      if (!card) return;
 
-        const media = card.querySelector("img, video").cloneNode(true);
+      modal.style.display = "flex";
+      modalBody.innerHTML = "";
 
-        if (media.tagName.toLowerCase() === "video") {
-          media.setAttribute("controls", "true");
-          media.setAttribute("autoplay", "true");
-          media.setAttribute("playsinline", "true");
-        }
+      const media = card.querySelector("img, video").cloneNode(true);
 
-        modalBody.appendChild(media);
-      });
+      if (media.tagName.toLowerCase() === "video") {
+        media.setAttribute("controls", "true");
+        media.setAttribute("autoplay", "true");
+        media.setAttribute("playsinline", "true");
+      }
+
+      modalBody.appendChild(media);
     });
 
     closeBtn.onclick = () => {
       modal.style.display = "none";
-      modalBody.innerHTML = ""; // stop video
+      modalBody.innerHTML = "";
     };
 
     modal.onclick = (e) => {
       if (e.target === modal) {
         modal.style.display = "none";
-        modalBody.innerHTML = ""; // stop video
+        modalBody.innerHTML = "";
       }
     };
   </script>
