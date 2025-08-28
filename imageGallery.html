@@ -3,166 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flip Image & Video Gallery</title>
+  <title>Gallery with Expand</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
-      background: #f4f4f4;
-      color: #333;
+      background: linear-gradient(135deg, #d2b7ec, #157be1);
+      color: white;
     }
-
     h1 {
       text-align: center;
-      font-size: 2rem;
-      margin: 30px 0 20px;
+      margin: 20px 0;
     }
-
-    /* Grid Layouts */
-    .gallery,
-    .video-gallery {
+    .gallery, .video-gallery {
       display: grid;
-      gap: 20px;              /* gap inside the grid */
-      margin: 20px auto;      /* gap outside the grid */
-      max-width: 1400px;      /* center layout */
+      gap: 15px;
+      margin: 20px auto;
+      max-width: 1200px;
     }
-
     .gallery {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
-
     .video-gallery {
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
-
-    /* Flip Card Base */
-    .flip-card {
-      perspective: 1000px;
-      cursor: pointer;
-    }
-
-    .flip-inner {
-      position: relative;
-      width: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.6s;
-      aspect-ratio: 4 / 3; /* keeps card proportional */
-    }
-
-    .flip-card.active .flip-inner {
-      transform: rotateY(180deg);
-    }
-
-    .flip-front, .flip-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+    .media-card {
+      background: rgba(255,255,255,0.1);
       border-radius: 10px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-      backface-visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .flip-front {
-      background: linear-gradient(135deg, #007bff, #00d4ff);
-      color: #fff;
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-align: center;
       padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s;
     }
-
-    .flip-back {
-      background: #000;
-      transform: rotateY(180deg);
+    .media-card:hover {
+      transform: scale(1.05);
     }
-
-    /* Media inside card */
-    .flip-back img, 
-    .flip-back video {
+    .media-card img, .media-card video {
       width: 100%;
-      height: 100%;
-      object-fit: contain; /* show full content */
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
       border-radius: 10px;
     }
-
-    /* Responsive text */
-    @media (max-width: 600px) {
-      h1 { font-size: 1.5rem; }
-      .flip-front { font-size: 1rem; }
+    .modal video, .modal img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <h1>My Custom Image Gallery</h1>
+  <h1>Frames Full of Memories!</h1>
   <div class="gallery">
-    <!-- 39 Images -->
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image1.jpeg" alt="Image 1"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image2.jpeg" alt="Image 2"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image3.jpeg" alt="Image 3"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image4.jpeg" alt="Image 4"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image5.jpeg" alt="Image 5"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image6.jpeg" alt="Image 6"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image7.jpeg" alt="Image 7"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image8.jpeg" alt="Image 8"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image9.jpeg" alt="Image 9"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image10.jpeg" alt="Image 10"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image11.jpeg" alt="Image 11"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image12.jpeg" alt="Image 12"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image13.jpeg" alt="Image 13"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image14.jpeg" alt="Image 14"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image15.jpeg" alt="Image 15"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image16.jpeg" alt="Image 16"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image17.jpeg" alt="Image 17"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image18.jpeg" alt="Image 18"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image19.jpeg" alt="Image 19"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image20.jpeg" alt="Image 20"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image21.jpeg" alt="Image 21"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image22.jpeg" alt="Image 22"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image23.jpg" alt="Image 23"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image24.jpg" alt="Image 24"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image25.jpg" alt="Image 25"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image26.jpg" alt="Image 26"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image27.jpg" alt="Image 27"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image28.jpg" alt="Image 28"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image29.jpg" alt="Image 29"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image30.jpg" alt="Image 30"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image31.jpg" alt="Image 31"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image32.jpg" alt="Image 32"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image33.jpg" alt="Image 33"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image34.jpg" alt="Image 34"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image35.jpg" alt="Image 35"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image36.jpg" alt="Image 36"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image37.jpg" alt="Image 37"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image38.jpg" alt="Image 38"></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><img src="images/image39.jpg" alt="Image 39"></div></div></div>
+    <!-- Images 1–22 (jpeg) -->
+    <div class="media-card">Click to see<img src="images/image1.jpeg" alt="Image 1"></div>
+    <div class="media-card">Click to see<img src="images/image2.jpeg" alt="Image 2"></div>
+    <div class="media-card">Click to see<img src="images/image3.jpeg" alt="Image 3"></div>
+    <div class="media-card">Click to see<img src="images/image4.jpeg" alt="Image 4"></div>
+    <div class="media-card">Click to see<img src="images/image5.jpeg" alt="Image 5"></div>
+    <div class="media-card">Click to see<img src="images/image6.jpeg" alt="Image 6"></div>
+    <div class="media-card">Click to see<img src="images/image7.jpeg" alt="Image 7"></div>
+    <div class="media-card">Click to see<img src="images/image8.jpeg" alt="Image 8"></div>
+    <div class="media-card">Click to see<img src="images/image9.jpeg" alt="Image 9"></div>
+    <div class="media-card">Click to see<img src="images/image10.jpeg" alt="Image 10"></div>
+    <div class="media-card">Click to see<img src="images/image11.jpeg" alt="Image 11"></div>
+    <div class="media-card">Click to see<img src="images/image12.jpeg" alt="Image 12"></div>
+    <div class="media-card">Click to see<img src="images/image13.jpeg" alt="Image 13"></div>
+    <div class="media-card">Click to see<img src="images/image14.jpeg" alt="Image 14"></div>
+    <div class="media-card">Click to see<img src="images/image15.jpeg" alt="Image 15"></div>
+    <div class="media-card">Click to see<img src="images/image16.jpeg" alt="Image 16"></div>
+    <div class="media-card">Click to see<img src="images/image17.jpeg" alt="Image 17"></div>
+    <div class="media-card">Click to see<img src="images/image18.jpeg" alt="Image 18"></div>
+    <div class="media-card">Click to see<img src="images/image19.jpeg" alt="Image 19"></div>
+    <div class="media-card">Click to see<img src="images/image20.jpeg" alt="Image 20"></div>
+    <div class="media-card">Click to see<img src="images/image21.jpeg" alt="Image 21"></div>
+    <div class="media-card">Click to see<img src="images/image22.jpeg" alt="Image 22"></div>
+
+    <!-- Images 23–39 (jpg) -->
+    <div class="media-card">Click to see<img src="images/image23.jpg" alt="Image 23"></div>
+    <div class="media-card">Click to see<img src="images/image24.jpg" alt="Image 24"></div>
+    <div class="media-card">Click to see<img src="images/image25.jpg" alt="Image 25"></div>
+    <div class="media-card">Click to see<img src="images/image26.jpg" alt="Image 26"></div>
+    <div class="media-card">Click to see<img src="images/image27.jpg" alt="Image 27"></div>
+    <div class="media-card">Click to see<img src="images/image28.jpg" alt="Image 28"></div>
+    <div class="media-card">Click to see<img src="images/image29.jpg" alt="Image 29"></div>
+    <div class="media-card">Click to see<img src="images/image30.jpg" alt="Image 30"></div>
+    <div class="media-card">Click to see<img src="images/image31.jpg" alt="Image 31"></div>
+    <div class="media-card">Click to see<img src="images/image32.jpg" alt="Image 32"></div>
+    <div class="media-card">Click to see<img src="images/image33.jpg" alt="Image 33"></div>
+    <div class="media-card">Click to see<img src="images/image34.jpg" alt="Image 34"></div>
+    <div class="media-card">Click to see<img src="images/image35.jpg" alt="Image 35"></div>
+    <div class="media-card">Click to see<img src="images/image36.jpg" alt="Image 36"></div>
+    <div class="media-card">Click to see<img src="images/image37.jpg" alt="Image 37"></div>
+    <div class="media-card">Click to see<img src="images/image38.jpg" alt="Image 38"></div>
+    <div class="media-card">Click to see<img src="images/image39.jpg" alt="Image 39"></div>
   </div>
 
-  <h1>Some Memories are Captured</h1>
+  <h1>Some Memories Are In Motion Too!</h1>
   <div class="video-gallery">
-    <!-- 7 Videos -->
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><video controls playsinline><source src="v1.mp4" type="video/mp4"></video></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><video controls playsinline><source src="v2.mp4" type="video/mp4"></video></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><video controls playsinline><source src="v3.mp4" type="video/mp4"></video></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><video controls playsinline><source src="v4.mp4" type="video/mp4"></video></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><video controls playsinline><source src="v5.mp4" type="video/mp4"></video></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><video controls playsinline><source src="v6.mp4" type="video/mp4"></video></div></div></div>
-    <div class="flip-card"><div class="flip-inner"><div class="flip-front">Click to see</div><div class="flip-back"><video controls playsinline><source src="v7.mp4" type="video/mp4"></video></div></div></div>
+    <div class="media-card">Click to see<video src="v1.mp4"></video></div>
+    <div class="media-card">Click to see<video src="v2.mp4"></video></div>
+    <div class="media-card">Click to see<video src="v3.mp4"></video></div>
+    <div class="media-card">Click to see<video src="v4.mp4"></video></div>
+    <div class="media-card">Click to see<video src="v5.mp4"></video></div>
+    <div class="media-card">Click to see<video src="v6.mp4"></video></div>
+    <div class="media-card">Click to see<video src="v7.mp4"></video></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <span class="close" id="closeBtn">&times;</span>
+    <div id="modal-body"></div>
   </div>
 
   <script>
-    const cards = document.querySelectorAll(".flip-card");
-    cards.forEach(card => {
+    const modal = document.getElementById("modal");
+    const modalBody = document.getElementById("modal-body");
+    const closeBtn = document.getElementById("closeBtn");
+
+    document.querySelectorAll(".media-card").forEach(card => {
       card.addEventListener("click", () => {
-        cards.forEach(c => c.classList.remove("active"));
-        card.classList.add("active");
+        modal.style.display = "flex";
+        modalBody.innerHTML = ""; // clear old content
+
+        const media = card.querySelector("img, video").cloneNode(true);
+
+        if (media.tagName.toLowerCase() === "video") {
+          media.setAttribute("controls", "true");
+          media.setAttribute("autoplay", "true");
+          media.setAttribute("playsinline", "true");
+        }
+
+        modalBody.appendChild(media);
       });
     });
+
+    closeBtn.onclick = () => {
+      modal.style.display = "none";
+      modalBody.innerHTML = ""; // stop video
+    };
+
+    modal.onclick = (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        modalBody.innerHTML = ""; // stop video
+      }
+    };
   </script>
 
 </body>
