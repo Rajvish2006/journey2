@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome Page</title>
+  <title>Entrance Page</title>
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -32,6 +32,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      padding: 0 20px;
       animation: fadeIn 1s ease-in-out;
     }
 
@@ -39,16 +41,16 @@
       font-size: 60px;
       color: #333;
       margin-bottom: 60px;
-      text-align: center;
       opacity: 0;
       animation: slideInDown 1.2s ease-out forwards;
-      animation-delay: 1s; /* Delay showing title */
+      animation-delay: 1s;
+      line-height: 1.2;
     }
 
     .button1 {
       opacity: 0;
       animation: fadeInUp 1s ease-out forwards;
-      animation-delay: 2.5s; /* Delay showing button */
+      animation-delay: 2.5s;
     }
 
     button {
@@ -60,11 +62,13 @@
       font-size: 18px;
       font-weight: bold;
       transition: 0.3s ease-in-out;
+      cursor: pointer;
     }
+
     button:hover {
       box-shadow: 0 0 25px rgba(209,107,165,0.7), 0 0 35px rgba(93,38,193,0.6);
       transform: scale(1.07);
-  }
+    }
 
     /* Animations */
     @keyframes fadeIn {
@@ -93,6 +97,29 @@
         transform: translateY(0);
       }
     }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .head {
+        font-size: 40px;
+        margin-bottom: 40px;
+      }
+      button {
+        font-size: 16px;
+        padding: 12px 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .head {
+        font-size: 28px;
+        margin-bottom: 30px;
+      }
+      button {
+        font-size: 14px;
+        padding: 10px 25px;
+      }
+    }
   </style>
 </head>
 
@@ -108,13 +135,12 @@
 
   <script>
     function goToNext() {
-      // Delay navigation by 2 seconds
       const button = document.querySelector("button");
       button.disabled = true;
       button.textContent = "Loading...";
       setTimeout(() => {
         window.location.href = "home.html"; // Change to your actual page
-      }, 2000);
+      }, 1000);
     }
   </script>
 </body>
